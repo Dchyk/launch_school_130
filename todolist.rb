@@ -108,4 +108,15 @@ class TodoList
     todos
   end
 
+  def select
+    selected = []
+
+    todos.each do |item|
+      if yield(item) == true
+        selected << item
+      end
+    end
+
+    selected
+  end
 end
