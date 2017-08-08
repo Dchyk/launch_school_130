@@ -119,4 +119,33 @@ class TodoList
 
     selected
   end
+
+  # Methods
+
+  def find_by_title(str)
+    self.each do |todo|
+      return todo if todo.title == str
+    end
+    nil
+  end
+
+  def all_done
+    self.select { |todo| todo.done? }
+  end
+
+  def all_not_done
+    self.select { |todo| !todo.done? }
+  end
+
+  def mark_done(str)
+    self.select { |todo| todo.title == str }.first.done!
+  end
+
+  def mark_all_done
+    self.each { |todo| todo.done! }
+  end
+
+  def mark_all_undone
+    self.each { |todo| todo.undone! }
+  end
 end
