@@ -105,11 +105,11 @@ class TodoList
       counter += 1
     end
 
-    todos
+    self
   end
 
   def select
-    selected = []
+    selected = TodoList.new(title)
 
     todos.each do |item|
       if yield(item) == true
