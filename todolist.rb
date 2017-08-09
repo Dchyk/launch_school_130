@@ -37,14 +37,14 @@ class TodoList
 
   # rest of class needs implementation
 
-  def add(item)
+  def <<(item)
     if item.instance_of?(Todo)
       self.todos << item
     else
       raise TypeError, "Can only add Todo objects"
     end
   end
-  alias_method :<<, :add
+  alias_method :add, :<<
 
   def size
     todos.size
@@ -63,14 +63,18 @@ class TodoList
   end
 
   def mark_done_at(index)
-    todos.item_at(index).done!
+    item_at(index).done!
   end
 
   def mark_undone_at(index)
-    todos.item_at(index).undone!
+    item_at(index).undone!
   end
 
-  # Deleting from the list
+  def done!
+    @todos.each_index do |idx|
+      mark_done_at(idx)
+    end
+  end
 
   def shift
     todos.shift
@@ -80,8 +84,12 @@ class TodoList
     todos.pop
   end
 
+  def done?
+    @todos.all? { |todo| todo.done? }
+  end
+
   def remove_at(index)
-    todos.delete_at(index) unless todos.item_at(index) == IndexError
+    todos.delete(item_at(index))
   end
 
   # Outputting the list
