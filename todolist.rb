@@ -95,8 +95,9 @@ class TodoList
   # Outputting the list
 
   def to_s
-    puts "---- #{title} ----\n"
-    todos.each { |item| puts item }
+    text = "---- #{title} ----\n"
+    text << @todos.map(&:to_s).join("\n")
+    text
   end
 
   def to_a

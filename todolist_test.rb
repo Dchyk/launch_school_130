@@ -113,7 +113,57 @@ class TodoListTest < MiniTest::Test
 
   def test_remove_at
     assert_raises(IndexError) { @list.remove_at(100)}
-    assert_equal(@todo1, @list.remove_at(0))
-    assert_equal(@todo3, @list.remove_at(2))
+    @list.remove_at(1)
+    assert_equal([@todo1, @todo3], @list.to_a)
+  end
+
+  def test_to_s
+    output = <<~OUTPUT.chomp
+    ---- Today's Todos ----
+    [ ] Buy milk
+    [ ] Clean room
+    [ ] Go to gym
+    OUTPUT
+
+    assert_equal(output, @list.to_s)
+  end
+
+  def test_to_s_done
+    output = <<~OUTPUT.chomp
+    ---- Today's Todos ----
+    [ ] Buy milk
+    [X] Clean room
+    [ ] Go to gym
+    OUTPUT
+
+    @list.mark_done_at(1)
+    assert_equal(output, @list.to_s)
+  end
+
+  def test_to_s_all_done
+    output = <<~OUTPUT.chomp
+    ---- Today's Todos ----
+    [X] Buy milk
+    [X] Clean room
+    [X] Go to gym
+    OUTPUT
+
+    @list.done!
+    assert_equal(output, @list.to_s)
+  end
+
+  def test_each
+    counter = 0
+    @list.each { counter += 1 }
+
+    assert_equal(3, counter)
+  end
+
+  def test_each_returns_obj
+    assert_same(@list, @list.each { |todo| puts todo })
+  end
+
+  def test_select
+    refute_same(@list, @list.select { |todo| true } )
   end
 end
