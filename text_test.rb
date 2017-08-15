@@ -19,7 +19,7 @@ class TextTest < Minitest::Test
     dolor ornere bibendum. Morbi ut messe nec lorem tincidunt elementum vitee id megne. Cres
     et verius meuris, et pheretre mi.
     TEXT
-    
+
     assert_equal(expected_text.count('e'), actual_text.count('e'))
   end
 
@@ -30,6 +30,7 @@ class TextTest < Minitest::Test
 
   def teardown
     @sample_text.close
+    puts "File has been closed: #{@sample_text.closed?}"
   end
 
 end
